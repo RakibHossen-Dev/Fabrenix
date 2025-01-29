@@ -1,6 +1,7 @@
 import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navber from "./components/Navber";
+import Footer from "./components/Footer";
 
 const roboto = Roboto({
   weight: "400",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
       <body className={`${roboto.variable} ${geistMono.variable} antialiased`}>
         <Navber></Navber>
         <div className=" h-[600px]">{children}</div>
+        <Footer></Footer>
       </body>
     </html>
   );
