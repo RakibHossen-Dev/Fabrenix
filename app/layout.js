@@ -1,16 +1,18 @@
-import { Roboto, Geist_Mono } from "next/font/google";
+import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import Navber from "./components/Navber";
 import Footer from "./components/Footer";
 
 const roboto = Roboto({
-  weight: "400",
+  weight: ["400", "700"], // Add the required weights
   subsets: ["latin"],
+  variable: "--font-roboto",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  weight: ["400", "700"], // Add the required weights
   subsets: ["latin"],
+  variable: "--font-poppins",
 });
 
 export const metadata = {
@@ -21,10 +23,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${geistMono.variable} antialiased`}>
-        <Navber></Navber>
-        <div className=" h-[600px]">{children}</div>
-        <Footer></Footer>
+      <body className={`${roboto.variable} ${poppins.variable} antialiased`}>
+        <Navber />
+        <div className="min-h-[450px]">{children}</div>
+        <Footer />
       </body>
     </html>
   );
