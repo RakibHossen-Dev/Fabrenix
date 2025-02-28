@@ -9,10 +9,22 @@ import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { useRef } from "react";
 import { usePathname } from "next/navigation";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOut, useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 const Navber = () => {
   const sideMenuRef = useRef();
   const pathname = usePathname();
+  const { data, status } = useSession();
 
   const openMenu = () => {
     sideMenuRef.current.style.transform = "translateX(-16rem)";
@@ -28,6 +40,11 @@ const Navber = () => {
     { name: "CONTACT", path: "/contact" },
     { name: "ADMIN PANEL", path: "/dashboard" },
   ];
+
+  const handleLogout = async () => {
+    await signOut();
+    await toast.success("Logout successfully");
+  };
 
   if (!pathname.includes("dashboard")) {
     return (
@@ -59,9 +76,45 @@ const Navber = () => {
               <GoSearch className="md:text-2xl" />
               Search
             </Link>
-            <Link href="/">
-              <LuUser className="md:text-2xl" />
-            </Link>
+            {status === "authenticated" ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <LuUser className="md:text-2xl cursor-pointer " />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      Profile
+                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Billing
+                      <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Settings
+                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Keyboard shortcuts
+                      <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    Log out
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link href="/login">
+                <LuUser className="md:text-2xl" />
+              </Link>
+            )}
 
             <Link href="/" className="relative  hidden lg:block">
               <MdOutlineFavoriteBorder className="text-2xl" />
