@@ -15,23 +15,7 @@ const RegisterForm = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
     console.log(data);
-    // const imageFile = { image: data.image[0] };
 
-    // const res = await axios.post(image_hosting_api, imageFile, {
-    //   headers: {
-    //     "content-type": "multipart/form-data",
-    //   },
-    // });
-
-    // registerUser({
-    //   name: data.name,
-    //   email: data.email,
-    //   photo: res.data.data.display_url,
-    //   password: data.password,
-    //   role: "user",
-    // });
-
-    // console.log(res.data.data.display_url);
     try {
       const imageFile = { image: data.image[0] };
 
