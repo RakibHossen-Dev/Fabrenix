@@ -26,7 +26,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import toast from "react-hot-toast";
-import ProductUpdateForm from "./components/ProductUpdateForm"
+// import ProductUpdateForm from "./components/ProductUpdateForm";
 const page = () => {
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
@@ -84,7 +84,7 @@ const page = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products.map((product) => (
+            {products?.map((product) => (
               <TableRow key={product?._id}>
                 <TableCell className="font-medium">
                   <img
@@ -96,20 +96,16 @@ const page = () => {
                 <TableCell>{product?.quantity}</TableCell>
                 <TableCell className="">${product?.price}</TableCell>
                 <TableCell className="">
-                  {/* <FaEdit className="text-xl text-gray-800"></FaEdit> */}
-                  <ProductUpdateForm></ProductUpdateForm>
+                  {/* <ProductUpdateForm product={product}></ProductUpdateForm> */}
+                  <Link href={`/dashboard/manageProduct/${product._id}`}>
+                    <FaEdit className="text-xl text-gray-800 cursor-pointer"></FaEdit>
+                  </Link>
                 </TableCell>
                 <TableCell className="text-right">
                   <AlertDialog>
                     <AlertDialogTrigger>
-                      {/* <button onClick={() => handleDeleteProduct(product._id)}> */}
-                      {/* </button> */}
-                      <FaTrash
-                        // onClick={() => handleDeleteProduct(product._id)}
-                        className="text-xl text-gray-800"
-                      ></FaTrash>
+                      <FaTrash className="text-xl text-gray-800"></FaTrash>
                     </AlertDialogTrigger>
-                    {/* <AlertDialogTrigger>Open</AlertDialogTrigger> */}
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
