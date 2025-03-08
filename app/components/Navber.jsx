@@ -5,10 +5,11 @@ import { GoSearch } from "react-icons/go";
 import { LuUser } from "react-icons/lu";
 import { RiMenu3Line } from "react-icons/ri";
 import { RxCross1 } from "react-icons/rx";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import { useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,11 +22,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { useWishlist } from "../context/WishlistContext";
 const Navber = () => {
   const sideMenuRef = useRef();
   const pathname = usePathname();
   const { data, status } = useSession();
-
+  const router = useRouter();
+  const { wishlist } = useWishlist();
   const openMenu = () => {
     sideMenuRef.current.style.transform = "translateX(-16rem)";
   };
@@ -45,7 +48,21 @@ const Navber = () => {
     await signOut();
     await toast.success("Logout successfully");
   };
+  // const [wishlists, setWishlist] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:3000/api/wishlist");
+  //       setWishlist(res.data);
+  //       router.refresh();
+  //     } catch (error) {
+  //       console.error("Error fetching wishlist data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
   if (!pathname.includes("dashboard")) {
     return (
       <div className="border-b">
@@ -86,7 +103,7 @@ const Navber = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
-                      Profile
+                      <Link href="/profile">Profile</Link>
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
@@ -116,10 +133,10 @@ const Navber = () => {
               </Link>
             )}
 
-            <Link href="/" className="relative  hidden lg:block">
+            <Link href="/wishlist" className="relative  hidden lg:block">
               <MdOutlineFavoriteBorder className="text-2xl" />
               <p className="bg-[#92614c] text-white text-center  px-2  rounded-full absolute bottom-3 left-3">
-                0
+                {wishlist?.length}
               </p>
             </Link>
             <Link href="/" className="relative hidden lg:block">

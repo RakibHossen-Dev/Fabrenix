@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import NextAuthProvider from "@/Providers/NextAuthProvider";
 import QueryProvider from "./components/QueryProvider";
+import { WishlistProvider } from "./context/WishlistContext";
 const roboto = Roboto({
   weight: ["400", "700"], // Add the required weights
   subsets: ["latin"],
@@ -28,10 +29,12 @@ export default function RootLayout({ children }) {
       <body className={`${roboto.variable} ${poppins.variable} antialiased`}>
         <QueryProvider>
           <NextAuthProvider>
-            <Navber />
-            <div className="min-h-[450px]">{children}</div>
-            <Footer />
-            <Toaster position="top-center" />
+            <WishlistProvider>
+              <Navber />
+              <div className="min-h-[450px]">{children}</div>
+              <Footer />
+              <Toaster position="top-center" />
+            </WishlistProvider>
           </NextAuthProvider>
         </QueryProvider>
       </body>
