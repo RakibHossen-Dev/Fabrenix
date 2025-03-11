@@ -7,14 +7,7 @@ export const GET = async (req) => {
   return NextResponse.json(result);
 };
 
-// export const POST = async (req) => {
-//   const body = await req.json();
 
-//   const wishlistCollection = dbConnect(collectionNamesObj.wishlistCollection);
-//   const result = await wishlistCollection.insertOne(body);
-
-//   return NextResponse.json(result);
-// };
 
 export const POST = async (req) => {
   const body = await req.json();

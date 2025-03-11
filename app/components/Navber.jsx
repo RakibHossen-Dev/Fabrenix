@@ -23,12 +23,14 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useWishlist } from "../context/WishlistContext";
+import { useCart } from "../context/CartContext";
 const Navber = () => {
   const sideMenuRef = useRef();
   const pathname = usePathname();
   const { data, status } = useSession();
   const router = useRouter();
   const { wishlist } = useWishlist();
+  const { cart, forceUpdate } = useCart();
   const openMenu = () => {
     sideMenuRef.current.style.transform = "translateX(-16rem)";
   };
@@ -48,21 +50,7 @@ const Navber = () => {
     await signOut();
     await toast.success("Logout successfully");
   };
-  // const [wishlists, setWishlist] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get("http://localhost:3000/api/wishlist");
-  //       setWishlist(res.data);
-  //       router.refresh();
-  //     } catch (error) {
-  //       console.error("Error fetching wishlist data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
   if (!pathname.includes("dashboard")) {
     return (
       <div className="border-b">
@@ -107,16 +95,12 @@ const Navber = () => {
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      Billing
-                      <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                      My Orders
+                      <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      Settings
-                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Keyboard shortcuts
-                      <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                      Payment
+                      <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
 
@@ -139,10 +123,13 @@ const Navber = () => {
                 {wishlist?.length}
               </p>
             </Link>
-            <Link href="/" className="relative hidden lg:block">
+            <Link href="/cart" className="relative hidden lg:block">
               <HiOutlineShoppingBag className="text-2xl" />
-              <p className="bg-[#92614c] text-white text-center  px-2  rounded-full absolute bottom-3 left-3">
-                0
+              <p
+                key={forceUpdate}
+                className="bg-[#92614c] text-white text-center  px-2  rounded-full absolute bottom-3 left-3"
+              >
+                {cart?.length}
               </p>
             </Link>
             <button onClick={openMenu} className="lg:hidden">
