@@ -30,9 +30,16 @@ export const POST = async (req) => {
   const existingItem = await cartCollection.findOne({ email, productId });
 
   if (existingItem) {
+    // const newQuantity = existingItem.quantity + quantity;
+    // const newPrice = newQuantity * price;
+    // const newPrice = existingItem.price + quantity * price;
+    const pricePerUnit = existingItem.price / existingItem.quantity; // 🔹 প্রতি ইউনিটের দাম বের করা
+    const newQuantity = existingItem.quantity + quantity;
+    const newPrice = newQuantity * pricePerUnit;
     await cartCollection.updateOne(
       { email, productId },
-      { $inc: { quantity: 1 } }
+      // { $set: { quantity: existingItem.quantity + quantity } }
+      { $set: { quantity: newQuantity, price: newPrice } }
     );
     return NextResponse.json({ message: "Quantity updated!" });
   } else {
@@ -44,7 +51,7 @@ export const POST = async (req) => {
       price,
       color,
       size,
-      quantity: quantity || 1,
+      quantity,
     });
     return NextResponse.json({ message: "Added to cart!" });
   }

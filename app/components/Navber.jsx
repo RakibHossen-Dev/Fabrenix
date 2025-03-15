@@ -95,11 +95,12 @@ const Navber = () => {
                       <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      My Orders
+                      <Link href="/myOrder"> My Orders</Link>
                       <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      Payment
+                      <Link href="/paymentHistory"> Payment</Link>
+
                       <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>

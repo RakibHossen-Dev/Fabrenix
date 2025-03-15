@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const CartContext = createContext();
 
@@ -24,6 +25,7 @@ export const CartProvider = ({ children }) => {
       const res = await axios.post("/api/addToCart", addToCartItem);
       if (res.data.acknowledged) {
         setCart((prev) => [...prev, res.data.item]);
+        toast.success("Added Cart!");
       }
     } catch (error) {
       console.error("Error adding to cart:", error);

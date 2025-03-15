@@ -19,6 +19,8 @@ const Page = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   // console.log(session.user.email);
   const router = useRouter();
   const { addToWishlist } = useWishlist();
@@ -40,6 +42,19 @@ const Page = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (data) {
+      setTotalPrice(parseInt(data.price));
+    }
+  }, [data]);
+  const handleQuantityChange = (type) => {
+    setSelectedQuantity((prevQuantity) => {
+      let newQuantity =
+        type === "increment" ? prevQuantity + 1 : Math.max(1, prevQuantity - 1);
+      setTotalPrice(newQuantity * data.price);
+      return newQuantity;
+    });
+  };
   if (!data) return <p>Loading...</p>;
   const handleWishList = async () => {
     const wishlistItem = {
@@ -91,25 +106,25 @@ const Page = () => {
       productId: data?._id,
       productName: data?.productName,
       image: data?.images[0],
-      price: data?.price,
+      price: totalPrice,
       color: selectedColor,
       size: selectedSize,
       quantity: selectedQuantity,
     };
     console.log("addToCartItem", addToCartItem);
     await addToCart(addToCartItem);
-    try {
-      const res = await axios.post(
-        "http://localhost:3000/api/addToCart",
-        addToCartItem
-      );
-      console.log(res);
-      if (res.data.acknowledged) {
-        toast.success("Added Cart!");
-      }
-    } catch (error) {
-      toast.error("Something wrong!");
-    }
+    // try {
+    //   const res = await axios.post(
+    //     "http://localhost:3000/api/addToCart",
+    //     addToCartItem
+    //   );
+    //   console.log(res);
+    //   if (res.data.acknowledged) {
+    //     toast.success("Added Cart!");
+    //   }
+    // } catch (error) {
+    //   toast.error("Something wrong!");
+    // }
   };
 
   return (
@@ -176,16 +191,14 @@ const Page = () => {
             <p className="font-medium text-sm">Quantity:</p>
             <div className="flex items-center border w-24 justify-between px-5 py-1 ">
               <button
-                onClick={() =>
-                  setSelectedQuantity((prev) => Math.max(1, prev - 1))
-                }
+                onClick={() => handleQuantityChange("decrement")}
                 className="text-lg"
               >
                 -
               </button>
               <span>{selectedQuantity}</span>
               <button
-                onClick={() => setSelectedQuantity((prev) => prev + 1)}
+                onClick={() => handleQuantityChange("increment")}
                 className="text-lg"
               >
                 +

@@ -1,24 +1,34 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaTrashAlt } from "react-icons/fa";
 
 const page = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/api/addToCart");
-        setData(res.data);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      }
-    };
+  // const [data, setData] = useState([]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:3000/api/addToCart");
+  //       setData(res.data);
+  //     } catch (error) {
+  //       console.error("Error fetching product data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+  const { data: data = [], refetch } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3000/api/addToCart");
+      return res.data;
+    },
+  });
   console.log(data);
   const totalPrice = data.reduce(
     (total, item) => total + parseInt(item.price),
@@ -26,6 +36,43 @@ const page = () => {
   );
 
   // const totalPrice = data.map(price =>)
+
+  const handleDeleteCart = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        `http://localhost:3000/api/addToCart/${id}`
+      );
+      refetch();
+      console.log(res);
+
+      if (res.data.deletedCount > 0) {
+        toast.success("Deleted successfully!");
+      } else {
+        toast.error("Deleted failed!");
+      }
+    } catch (error) {
+      toast.error("Server error!");
+    }
+  };
+
+  const handleQuantityChange = async (id, newQuantity) => {
+    if (newQuantity < 1) {
+      toast.error("Quantity must be at least 1");
+      return;
+    }
+    console.log(id, newQuantity);
+    const res = await axios.patch(`http://localhost:3000/api/addToCart/${id}`, {
+      quantity: newQuantity,
+    });
+
+    if (res.data.modifiedCount > 0) {
+      toast.success("Quantity updated!");
+      refetch();
+    } else {
+      toast.error("Update failed!");
+    }
+  };
   return (
     <div className="w-11/12 mx-auto my-10">
       <h2 className="text-2xl  font-light tracking-wide text-gray-600 flex items-center gap-2 mb-5">
@@ -46,12 +93,29 @@ const page = () => {
             </div>
             <div className="flex justify-between items-center gap-8">
               <p className="text-xl font-semibold">${cart.price}</p>
-              <Input
-                type="number"
-                defaultValue={cart.quantity}
-                className="w-16 text-center"
-              />
-              <FaTrashAlt></FaTrashAlt>
+              <div className="flex items-center gap-4 bg-gray-100 py-2 px-4 rounded-sm">
+                <button
+                  onClick={() =>
+                    handleQuantityChange(cart._id, cart.quantity - 1)
+                  }
+                  className="p-2  rounded-full text-lg bg-black text-white"
+                >
+                  -
+                </button>
+                <p>{cart.quantity}</p>
+                <button
+                  onClick={() =>
+                    handleQuantityChange(cart._id, cart.quantity + 1)
+                  }
+                  className="p-2  rounded-full text-lg bg-black text-white"
+                >
+                  +
+                </button>
+              </div>
+              <FaTrashAlt
+                onClick={() => handleDeleteCart(cart._id)}
+                className="cursor-pointer"
+              ></FaTrashAlt>
             </div>
           </div>
         </div>
@@ -75,7 +139,9 @@ const page = () => {
               <p>Total Amount</p>
               <p>{totalPrice + 20}$</p>
             </div>
-            <Button className="uppercase rounded-none">Checkout</Button>
+            <Link href="/placeOrder">
+              <Button className="uppercase rounded-none">Checkout</Button>
+            </Link>
           </div>
         </div>
       </div>

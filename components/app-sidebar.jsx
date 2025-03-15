@@ -16,6 +16,7 @@ import {
   PackageSearch,
   Settings2,
   GalleryVerticalEnd,
+  SquareKanban,
 } from "lucide-react";
 
 const data = {
@@ -32,8 +33,8 @@ const data = {
       url: "/dashboard/manageProduct",
       icon: PackageSearch,
     },
+    { title: "Orders", url: "/dashboard/order", icon: SquareKanban },
     { title: "Profile", url: "#", icon: CircleUser },
-    { title: "Settings", url: "#", icon: Settings2 },
   ],
 };
 
