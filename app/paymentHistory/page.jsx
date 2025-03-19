@@ -44,7 +44,7 @@ const page = () => {
                 </TableCell>
                 <TableCell>{payment.paymentMethid}</TableCell>
                 <TableCell>
-                  <button className="text-green-100 bg-green-500 py-1 px-3 rounded-full">
+                  <button className="text-green-100 bg-green-500 py-1 px-3 rounded-full cursor-default">
                     {payment.status}
                   </button>
                 </TableCell>

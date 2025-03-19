@@ -39,7 +39,7 @@ const Page = () => {
       paymentStatus,
       cartData: data,
       status: "pending",
-      totalPrice:totalPrice+20,
+      totalPrice: totalPrice + 20,
       orderDate: new Date().toISOString().split("T")[0],
     };
     console.log("Combined Data:", combinedData);

@@ -6,7 +6,7 @@ import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@
 export function NavMain({ items }) {
   return (
     <SidebarGroup>
-      <SidebarMenu>
+      <SidebarMenu >
         {items.map(({ title, url,icon: Icon, isActive }) => (
           <Collapsible key={title} asChild defaultOpen={isActive}>
             <SidebarMenuItem>

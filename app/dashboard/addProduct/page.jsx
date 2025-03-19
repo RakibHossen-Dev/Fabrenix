@@ -97,7 +97,7 @@ const Page = () => {
       const finalData = { ...formData, images: imageUrls };
       console.log("Final Submitted Data:", finalData);
       const res = await axios.post(
-        "http://localhost:3000/api/addProduct",
+        "http://localhost:3000el.app/api/addProduct",
         finalData
       );
       console.log(res);

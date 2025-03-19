@@ -277,7 +277,7 @@ const ProductUpdateForm = ({ data }) => {
     console.log("Submitted Data:", formData);
     try {
       const res = await axios.patch(
-        `http://localhost:3000/api/manageProduct/${data._id}`,
+        `http://localhost:3000el.app/api/manageProduct/${data._id}`,
         formData
       );
       console.log(res);
