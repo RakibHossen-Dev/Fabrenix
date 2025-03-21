@@ -40,7 +40,7 @@ const Navber = () => {
   const routes = [
     { name: "HOME", path: "/" },
     { name: "SHOP", path: "/shop" },
-    { name: "ABOUT", path: "/product" },
+    { name: "ABOUT", path: "/about" },
     { name: "BLOG", path: "/blog" },
     { name: "CONTACT", path: "/contact" },
     { name: "ADMIN PANEL", path: "/dashboard" },
@@ -53,10 +53,12 @@ const Navber = () => {
 
   if (!pathname.includes("dashboard")) {
     return (
-      <div className="border-b">
+      <div className="border-b fixed top-0 left-0 w-full bg-white/30 backdrop-blur-md z-10">
         <nav className="flex justify-between items-center py-5 w-11/12 mx-auto">
           <div>
-            <h1 className="text-4xl font-semibold text-black">Fabrenix</h1>
+            <Link href="/" className="text-4xl font-semibold text-black">
+              Fabrenix
+            </Link>
           </div>
           <div>
             <ul className="lg:flex items-center hidden">

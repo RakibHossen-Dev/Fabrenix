@@ -112,7 +112,7 @@ const Page = () => {
           <div className="flex justify-between gap-5 items-center mb-5">
             <h4 className="text-xl font-semibold">Recent Orders</h4>
             <Link href="/dashboard/order">
-            <Button>See All</Button>
+              <Button>See All</Button>
             </Link>
           </div>
           <Table>
@@ -136,15 +136,20 @@ const Page = () => {
                   <TableCell>{recentOrder.orderDate}</TableCell>
                   <TableCell>{recentOrder.totalPrice}</TableCell>
                   <TableCell className="text-right">
-                  <button
-  className={`py-1 px-2.5 rounded-full text-white 
-    ${recentOrder.status === "pending" ? "bg-red-500" : 
-      recentOrder.status === "Delivered" ? "bg-green-500" : 
-      recentOrder.status === "processing" ? "bg-yellow-500" : "bg-gray-400"
+                    <button
+                      className={`py-1 px-2.5 rounded-full text-white 
+    ${
+      recentOrder.status === "pending"
+        ? "bg-red-500"
+        : recentOrder.status === "Delivered"
+        ? "bg-green-500"
+        : recentOrder.status === "processing"
+        ? "bg-yellow-500"
+        : "bg-gray-400"
     }`}
->
-  {recentOrder.status}
-</button>
+                    >
+                      {recentOrder.status}
+                    </button>
                   </TableCell>
                 </TableRow>
               ))}

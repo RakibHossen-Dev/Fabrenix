@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
             <CartProvider>
               <WishlistProvider>
                 <Navber />
-                <div className="min-h-[450px]">{children}</div>
+                <div className="min-h-[450px] mt-24">{children}</div>
                 <Footer />
                 <Toaster position="top-center" />
               </WishlistProvider>
