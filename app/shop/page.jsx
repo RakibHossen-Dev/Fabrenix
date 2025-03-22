@@ -37,9 +37,9 @@ const page = () => {
     fetchProducts();
   }, []);
   console.log("products", products);
-  if (!products) {
-    return <p>Loading...</p>;
-  }
+  // if (!products) {
+  //   return <p>Loading...</p>;
+  // }
 
   const handleCategoryChange = (category) => {
     setSelectedCategories((prev) =>
