@@ -82,7 +82,7 @@ export default function ProfilePage() {
       <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
         <div className="flex items-center space-x-4">
           <img
-            src={session.user.image || "/default-avatar.png"}
+            src={session.user.photo || "/default-avatar.png"}
             alt="Profile Picture"
             className="w-20 h-20 rounded-full border border-gray-300"
           />

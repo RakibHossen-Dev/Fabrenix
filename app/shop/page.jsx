@@ -16,6 +16,8 @@ import { FaRegHeart } from "react-icons/fa";
 import { CiStar } from "react-icons/ci";
 // import SearchAndSort from "./components/SearchAndSort";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useWishlist } from "../context/WishlistContext";
 const page = () => {
   //   const products = await axios.get("http://localhost:3000/api/shop");
   const [products, setProducts] = useState([]);
@@ -25,6 +27,8 @@ const page = () => {
   const [selectedSize, setSelectedSize] = useState(""); // সাইজ ফিল্টার
   const [sortBy, setSortBy] = useState(""); // Sorting Option
   // Fetch Products
+  const { data: session, status } = useSession();
+  const { addToWishlist } = useWishlist();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -78,8 +82,20 @@ const page = () => {
       return 0;
     });
 
+  const handleWishlist = async (data) => {
+    const wishlistItem = {
+      email: session.user.email,
+      productId: data?._id,
+      productName: data?.productName,
+      image: data?.images[0],
+      price: data?.price,
+      ratings: data?.ratings,
+    };
+    // console.log(wishlistItem);
+    await addToWishlist(wishlistItem);
+  };
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="w-11/12 mx-auto mt-32 mb-10">
       <div className="flex justify-between items-center mb-10">
         <h2 className="text-2xl  font-light tracking-wide text-gray-600 flex items-center gap-2 mb-5">
           ALL <span className="font-bold text-gray-800">COLLECTION</span>
@@ -168,18 +184,23 @@ const page = () => {
         <div className="col-span-9">
           <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-2  md:gap-4 items-center ">
             {filteredProducts?.map((product) => (
-              <Link href={`/shop/${product._id}`} key={product?._id}>
-                <div className=" h-[320px] md:h-[340px]  ">
-                  <div className="relative">
-                    <img
-                      src={product?.images[0]}
-                      className="w-full md:h-[200px] h-[150px]rounded-lg  object-cover"
-                      alt={product?.productName}
-                    ></img>
-                    <span className="bg-rose-100 p-2 text-black text-md md:text-lg absolute top-2 right-2 rounded-md">
-                      <FaRegHeart />
-                    </span>
-                  </div>
+              <div
+                key={product._id}
+                className=" h-[320px] md:h-[340px]   relative"
+              >
+                <button
+                  onClick={() => handleWishlist(product)}
+                  className="bg-rose-100 p-2 text-black text-md md:text-lg absolute top-4 right-4 rounded-md"
+                >
+                  <FaRegHeart />
+                </button>
+                <Link href={`/shop/${product._id}`}>
+                  <img
+                    src={product?.images[0]}
+                    className="w-full md:h-[200px] h-[150px]rounded-lg  object-cover"
+                    alt={product?.productName}
+                  ></img>
+
                   <h3 className="md:text-lg text-md mt-3 font-semibold">
                     {product?.productName}
                   </h3>
@@ -190,8 +211,8 @@ const page = () => {
                   <p className="md:text-xl text-lg font-bold">
                     ${product?.price}.00
                   </p>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

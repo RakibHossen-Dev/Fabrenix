@@ -5,7 +5,7 @@ import { Palette, ShieldCheck, TrainTrack } from "lucide-react";
 
 const page = () => {
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="w-11/12 mx-auto mt-32 mb-10">
       <div className="my-10 text-center w-[500px] mx-auto">
         <h3 className="text-2xl  mb-3">We are Fabrenix</h3>
         <p className="text-sm">

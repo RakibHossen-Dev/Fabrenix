@@ -20,7 +20,7 @@ const Page = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const [selectedImage, setSelectedImage] = useState(data?.images[0]);
   // console.log(session.user.email);
   const router = useRouter();
   const { addToWishlist } = useWishlist();
@@ -128,14 +128,27 @@ const Page = () => {
   };
 
   return (
-    <div className="w-11/12 lg:w-[1000px] mx-auto my-10">
+    <div className="w-11/12 lg:w-[1000px] mx-auto  mt-32 mb-10">
       <div className="flex flex-col lg:flex-row gap-8 p-6 bg-white ">
         <div className="lg:w-1/2 flex justify-center items-center">
-          <img
-            src={data?.images[0]}
-            className="w-full max-w-[450px] lg:h-[450px] object-cover"
-            alt={data?.productName}
-          />
+          <div className="lg:h-[450px] flex flex-col justify-center items-center">
+            <img
+              src={selectedImage || data?.images[0]}
+              className="w-full lg:h-[350px] max-w-[350px]  object-cover"
+              alt={data?.productName}
+            />
+            <div className="grid grid-cols-4 gap-2 my-4">
+              {data.images.map((image, idx) => (
+                <img
+                  key={idx}
+                  src={image}
+                  className="h-24 border p-2 cursor-pointer hover:border-[#92614c]"
+                  alt="Logo"
+                  onClick={() => setSelectedImage(image)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="lg:w-1/2 space-y-4">
           <h3 className="text-3xl font-semibold text-gray-800">

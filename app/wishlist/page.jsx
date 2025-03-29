@@ -34,15 +34,12 @@ const page = () => {
           {wishlist?.map((product) => (
             <Link href={`/shop/${product._id}`} key={product?._id}>
               <div className="border h-[320px] md:h-[340px] p-2 rounded-lg ">
-                <div className="relative">
+                <div>
                   <img
                     src={product?.image}
                     className="w-full md:h-[200px] h-[150px]rounded-lg  object-cover"
                     alt={product?.name}
                   ></img>
-                  <span className="bg-rose-100 p-2 text-black text-md md:text-lg absolute top-2 right-2 rounded-md">
-                    <FaRegHeart />
-                  </span>
                 </div>
                 <h3 className="md:text-lg text-md mt-3 font-semibold">
                   {product?.productName}

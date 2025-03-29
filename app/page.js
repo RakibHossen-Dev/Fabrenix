@@ -7,13 +7,13 @@ import Review from "./components/Review";
 
 export default function Home() {
   return (
-    <>
+    <div className="mt-24">
       <Banner></Banner>
       <Category></Category>
       <LatestCollection></LatestCollection>
       <Offer></Offer>
       <Review></Review>
       <LatestBlogs></LatestBlogs>
-    </>
+    </div>
   );
 }

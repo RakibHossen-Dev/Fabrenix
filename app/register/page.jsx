@@ -6,7 +6,7 @@ import RegisterForm from "./components/RegisterForm";
 
 const page = () => {
   return (
-    <div className="w-11/12 mx-auto my-5 ">
+    <div className="w-11/12 mx-auto  mb-7 mt-28 ">
       <div className="max-w-[800px] mx-auto  lg:h-[500px] flex lg:justify-between justify-center items-center gap-5">
         <div className="lg:w-1/2 p-4 max-w-[400px] w-full">
           <h3 className="text-xl font-bold  mb-2">Create Your Account</h3>
@@ -17,7 +17,7 @@ const page = () => {
           <RegisterForm></RegisterForm>
 
           <p className="text-gray-700 mt-5">
-            Already have an account?  
+            Already have an account?
             <Link href="/login" className="text-[#92614c] font-bold ">
               Login
             </Link>

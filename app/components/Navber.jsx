@@ -24,6 +24,7 @@ import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useWishlist } from "../context/WishlistContext";
 import { useCart } from "../context/CartContext";
+import { useQuery } from "@tanstack/react-query";
 const Navber = () => {
   const sideMenuRef = useRef();
   const pathname = usePathname();
@@ -37,13 +38,22 @@ const Navber = () => {
   const closeMenu = () => {
     sideMenuRef.current.style.transform = "translateX(16rem)";
   };
+  const { data: currentUser = [], refetch } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3000/api/userRole");
+      return res.data;
+    },
+  });
   const routes = [
     { name: "HOME", path: "/" },
     { name: "SHOP", path: "/shop" },
     { name: "ABOUT", path: "/about" },
     { name: "BLOG", path: "/blog" },
     { name: "CONTACT", path: "/contact" },
-    { name: "ADMIN PANEL", path: "/dashboard" },
+    ...(currentUser[0]?.role === "admin"
+      ? [{ name: "ADMIN PANEL", path: "/dashboard" }]
+      : []),
   ];
 
   const handleLogout = async () => {
@@ -51,9 +61,12 @@ const Navber = () => {
     await toast.success("Logout successfully");
   };
 
+  // console.log("currentUser", currentUser[0].role);
+  // console.log("currentUser", currentUser);
+
   if (!pathname.includes("dashboard")) {
     return (
-      <div className="border-b fixed top-0 left-0 w-full bg-white/30 backdrop-blur-md z-10">
+      <div className="border-b fixed top-0 left-0 w-full bg-white/30 backdrop-blur-md z-10 ">
         <nav className="flex justify-between items-center py-5 w-11/12 mx-auto">
           <div>
             <Link href="/" className="text-4xl font-semibold text-black">

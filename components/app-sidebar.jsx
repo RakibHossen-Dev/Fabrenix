@@ -17,6 +17,7 @@ import {
   Settings2,
   GalleryVerticalEnd,
   SquareKanban,
+  HousePlus,
 } from "lucide-react";
 
 const data = {
@@ -24,7 +25,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard/adminDashboard",
+      url: "/dashboard",
       icon: SquareTerminal,
     },
     { title: "Add Product", url: "/dashboard/addProduct", icon: Plus },
@@ -34,7 +35,7 @@ const data = {
       icon: PackageSearch,
     },
     { title: "Orders", url: "/dashboard/order", icon: SquareKanban },
-    { title: "Profile", url: "#", icon: CircleUser },
+    { title: "Home", url: "/", icon: HousePlus },
   ],
 };
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 import LoginForm from "./components/LoginForm";
 const page = () => {
   return (
-    <div className="w-11/12 mx-auto my-5 ">
+    <div className="w-11/12 mx-auto mb-7 mt-28 ">
       <div className="max-w-[800px] mx-auto  lg:h-[500px]  flex lg:justify-between justify-center items-center gap-5">
         <div className="lg:w-1/2 p-4 max-w-[400px] w-full">
           <h3 className="text-xl font-bold ">Welcome</h3>
